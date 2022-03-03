@@ -6,11 +6,11 @@ $csvEverythingIsFine = new \app\CSVFile(__DIR__ . '/file1.csv');
 $csvWithEmptyColumn = new \app\CSVFile(__DIR__ . '/file2.csv');
 $csvWithEmptyColumnHeader = new app\CSVFile(__DIR__ . '/file3.csv');
 
-assert(true === testCsvWithDifferentNumberOfHeadingAndColumns($csvWithEmptyColumn));
-assert(true === testCsvWithDifferentNumberOfHeadingAndColumns($csvWithEmptyColumn));
-assert(true === testCsvWithDifferentNumberOfHeadingAndColumns($csvWithEmptyColumnHeader));
+assert(true === testCsvWithDifferentValuesOfHeadingsAndColumns($csvEverythingIsFine));
+assert(true === testCsvWithDifferentValuesOfHeadingsAndColumns($csvWithEmptyColumn));
+assert(true === testCsvWithDifferentValuesOfHeadingsAndColumns($csvWithEmptyColumnHeader));
 
-function testCsvWithDifferentNumberOfHeadingAndColumns(\app\CSVFile $csvFile)
+function testCsvWithDifferentValuesOfHeadingsAndColumns(\app\CSVFile $csvFile)
 {
     foreach ($csvFile as $row) {
         if ('object' !== gettype($row)) {
