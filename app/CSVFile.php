@@ -5,11 +5,11 @@ namespace app;
 class CSVFile extends DocumentIterator
 {
     /**
-     * @param string $csvFile
+     * @param string $pathToFile
      */
-    public function __construct($csvFile)
+    public function __construct($pathToFile)
     {
-        parent::__construct(new \SplFileObject($csvFile));
+        parent::__construct(new \SplFileObject($pathToFile));
         $this->setFlags(\SplFileObject::READ_CSV);
     }
 }
