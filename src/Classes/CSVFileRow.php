@@ -8,15 +8,12 @@ use Exception;
 
 final class CSVFileRow
 {
+
     private int $id;
     private array $columns;
 
     public function __construct(int $id, array $columns)
     {
-        if (!is_numeric($id)) {
-            throw new Exception('Id value must have a numeric format');
-        }
-
         foreach ($columns as $columnHeader => $columnValue) {
             if (empty($columnHeader)) {
                 throw new Exception('Document column header must not be empty');
@@ -46,4 +43,5 @@ final class CSVFileRow
     {
         return $this->columns[$columnName];
     }
+
 }

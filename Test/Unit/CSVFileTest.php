@@ -9,61 +9,55 @@ use PHPUnit\Framework\TestCase;
 
 class CSVFileTest extends TestCase
 {
+
+    private CSVFile $csvFileWithCorrectData;
+
+    private array $rows;
+
+    private $csvWithCorrectData = array(
+        'id,column0,column1,column2',
+        '1,value0,value1,value2',
+        '2,value3,value4,value5',
+        '3,value6,value7,value8'
+    );
+
     public function __construct(?string $name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
 
-        $this->createCsvFile(__DIR__ . '/correctData.csv', $this->csvWithCorrectData);
-        $this->csvFile = new CSVFile(__DIR__ . '/correctData.csv');
+        $this->createCsvFile(__DIR__ . '/CSVFileWithCorrectData.csv', $this->csvWithCorrectData);
+        $this->csvFileWithCorrectData = new CSVFile(__DIR__ . '/CSVFileWithCorrectData.csv');
 
         $this->rows = [];
 
-        foreach ($this->csvFile as $row) {
+        foreach ($this->csvFileWithCorrectData as $row) {
             $this->rows[] = $row;
         }
     }
 
-    private $csvFile;
-    private $rows;
-
-    private $csvWithCorrectData = array(
-        array('id', 'column0', 'column1', 'column2'),
-        array(1, 'value0', 'value1', 'value2'),
-        array(2, 'value3', 'value4', 'value5'),
-    );
-
-    private $csvWithFailedId = array(
-        array('id', 'column0', 'column1', 'column2'),
-        array('foo', 'value0', 'value1', 'value2'),
-        array(2, 'value3', 'value4', 'value5'),
-    );
-
-    private $csvWithDublicateHeader = array(
-        array('id', 'column0', 'column0', 'column2'),
-        array(1, 'value0', 'value1', 'value2'),
-        array(2, 'value3', 'value4', 'value5'),
-    );
-
-    protected function createCsvFile($pathToFile, $csvData): void
+    private function createCsvFile(string $pathToFile, array $csvData): void
     {
         $fp = fopen($pathToFile, 'w+');
-        foreach ($csvData as $row) {
-            fputcsv($fp, $row);
+
+        for ($i = 0; $i < count($csvData) - 1; $i++) {
+            fputs($fp, $csvData[$i] . PHP_EOL);
         }
+
+        fputs($fp, $csvData[$i]);
 
         fclose($fp);
     }
 
     public function testCSVFileRowType(): void
     {
-        foreach ($this->csvFile as $row) {
+        foreach ($this->csvFileWithCorrectData as $row) {
             $this->assertInstanceOf(CSVFileRow::class, $row);
         }
     }
 
     public function testGetIdMethod(): void
     {
-        foreach ($this->csvFile as $row) {
+        foreach ($this->csvFileWithCorrectData as $row) {
             $this->assertNotEmpty($row->getId());
         }
     }
@@ -80,4 +74,5 @@ class CSVFileTest extends TestCase
         $this->assertEquals(['id', 'column0', 'column1', 'column2'], $this->rows[0]->getColumnNames());
         $this->assertEquals(['id', 'column0', 'column1', 'column2'], $this->rows[1]->getColumnNames());
     }
+
 }
