@@ -30,6 +30,12 @@ final class CSVFile extends IteratorIterator
             throw new Exception('Column headers must be unique');
         }
 
+        foreach (parent::current() as $columnHeader) {
+            if (empty($columnHeader)) {
+                throw new Exception('Document column header must not be empty');
+            }
+        }
+
         $this->columnHeaders = parent::current();
 
         parent::next();

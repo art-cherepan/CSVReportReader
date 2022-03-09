@@ -14,12 +14,6 @@ final class CSVFileRow
 
     public function __construct(int $id, array $columns)
     {
-        foreach ($columns as $columnHeader => $columnValue) {
-            if (empty($columnHeader)) {
-                throw new Exception('Document column header must not be empty');
-            }
-        }
-
         $this->id = $id;
         $this->columns = $columns;
     }
