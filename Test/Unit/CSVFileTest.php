@@ -21,11 +21,10 @@ class CSVFileTest extends TestCase
         '3,value6,value7,value8'
     );
 
-    public function __construct(?string $name = null, array $data = [], $dataName = '')
+    public function setUp(): void
     {
-        parent::__construct($name, $data, $dataName);
-
         $this->createCsvFile(__DIR__ . '/CSVFileWithCorrectData.csv', $this->csvWithCorrectData);
+
         $this->csvFileWithCorrectData = new CSVFile(__DIR__ . '/CSVFileWithCorrectData.csv');
 
         $this->rows = [];
